@@ -30,26 +30,6 @@ jobs:
           mkdir -p snappymail-src
           tar xzf snappymail.tar.gz -C snappymail-src
 
-      - name: Prepare install tree
-        run: |
-          mkdir -p install-root/usr/share/snappymail
-          mkdir -p install-root/var/lib/snappymail
-          mkdir -p install-root/etc/snappymail
-          mkdir -p install-root/etc/nginx/snippets
-
-          # Application files
-          cp -a snappymail-src/* install-root/usr/share/snappymail/
-
-          # Move data dir to /var/lib/snappymail and symlink
-          if [ -d install-root/usr/share/snappymail/data ]; then
-            cp -a install-root/usr/share/snappymail/data/* install-root/var/lib/snappymail/ 2>/dev/null || true
-            rm -rf install-root/usr/share/snappymail/data
-          fi
-          ln -sf /var/lib/snappymail install-root/usr/share/snappymail/data
-
-          # Nginx snippet
-          cp nginx-snappymail.conf install-root/etc/nginx/snippets/snappymail.conf
-
       - name: Package with checkinstall
         run: |
           sudo apt-get update
@@ -62,7 +42,7 @@ jobs:
             --pakdir=. \
             --install=no \
             --fstrans=yes \
-            cp -a install-root/. /
+            make install
 
       - name: Repack .deb for reprepro compatibility
         run: |
