@@ -38,7 +38,7 @@ jobs:
             --pkgname=snappymail \
             --pkgversion="${{ steps.version.outputs.version }}" \
             --maintainer="graham@netlinux.co.uk" \
-            --requires="php-fpm,php-curl,php-gd,php-intl,php-mbstring,php-xml,php-zip,php-sqlite3,php-gnupg" \
+            --requires="nginx,php-fpm,php-curl,php-gd,php-intl,php-mbstring,php-xml,php-zip,php-sqlite3,php-gnupg" \
             --pakdir=. \
             --install=no \
             --fstrans=yes \
